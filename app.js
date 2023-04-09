@@ -199,7 +199,7 @@ app.get("/todos/:todoId/", verifyValues, async (request, response) => {
 app.post("/todos/", verifyBody, async (request, response) => {
   const todoDetails = request.body;
   const { id, todo, priority, status, category, dueDate } = todoDetails;
-
+  const date = format(new Date(dueDate), "yyyy-MM-dd");
   const createTodoQuery = `
     INSERT INTO
      todo (id,todo,priority,status,category,due_Date)
@@ -208,7 +208,7 @@ app.post("/todos/", verifyBody, async (request, response) => {
         '${priority}',
         '${status}',
         '${category}',
-        '${dueDate}');`;
+        '${date}');`;
   const dbResponse = await db.run(createTodoQuery);
   response.send("Todo Successfully Added");
 });
